@@ -1,45 +1,39 @@
-from django.shortcuts import render, redirect
-from .forms import NewUserForm
-from django.contrib.auth import login, authenticate  # add this
+from django.shortcuts import render, redirect,HttpResponseRedirect
+from .forms import UserForm
 from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm  # add this
-from django.contrib.auth import login, authenticate, logout  # add this
+from django.http import HttpResponse
 
+from .models import Users
 
 def home(request):
     return render(request, 'home.html')
 
 def register_request(request):
     if request.method == "POST":
-        form = NewUserForm(request.POST)
+        form = UserForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
             messages.success(request, "Registration successful.")
             return redirect("login:home")
         messages.error(request, "Unsuccessful registration. Invalid information.")
-    form = NewUserForm()
+    form = UserForm()
     return render(request=request, template_name="register.html", context={"register_form": form})
 
 def login_request(request):
-    if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                messages.info(request, f"You are now logged in as {username}.")
-                return redirect("login:home")
-            else:
-                messages.error(request, "Invalid username or password.")
-        else:
-            messages.error(request, "Invalid username or password.")
-    form = AuthenticationForm()
-    return render(request=request, template_name="logintemplate.html", context={"login_form": form})
+    if request.method == "POST":    
+        password=request.POST['password']
+        username=request.POST['username']
+        user=Users.objects.get(username=username,password=password)
+        if user is not None:
+            request.session['username']=username
+            request.session['password']=password
+            return HttpResponseRedirect("/login/")
+    return render(request=request, template_name="logintemplate.html")
 
 def logout_request(request):
-    logout(request)
+    request.session.flush()
     messages.info(request, "You have successfully logged out.")
-    return redirect("login:home")
+    return HttpResponseRedirect("/login/logintemplate")
+
+
+

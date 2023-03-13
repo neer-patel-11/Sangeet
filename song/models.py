@@ -54,6 +54,10 @@ class Song(Audio):
    comments = models.ManyToManyField(Comment, blank=True)
    type = models.CharField(max_length=max(len(v[0]) for v in TYPE_OF_SONG),choices=TYPE_OF_SONG, default='bhajan')
 
+   
+   def __str__(self):
+      return self.name
+
 
 TYPE_OF_PODCAST = (
    ('scientific', 'Scientific'),
@@ -70,6 +74,10 @@ class Podcast(Audio):
    comments = models.ManyToManyField(Comment, blank=True)
    type=models.CharField(max_length=max(len(v[0]) for v in TYPE_OF_PODCAST),choices=TYPE_OF_PODCAST)
 
+   
+   def __str__(self):
+      return self.name
+
 
 
 
@@ -77,3 +85,7 @@ class Playlist(models.Model):
    name = models.CharField(max_length=255)
    totalSongs = models.IntegerField(default=0)
    songs = models.ManyToManyField(Song)
+
+   
+   def __str__(self):
+      return self.name
