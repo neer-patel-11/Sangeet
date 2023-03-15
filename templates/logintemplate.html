@@ -12,12 +12,18 @@
     <h1>Login</h1>
     <form method="POST" action="">
         {% csrf_token %}
+        <br>
+        <label>Username:</label>
         <input name="username"></input>
-        <input name="password"></input>
-
-        <button class="btn btn-primary" type="submit" fdprocessedid="baingn">Login</button>
+        <br>
+        <label>Password:</label>
+        <input name="password" type="password"></input>
+        <br>
+        <br>
+        <button class="btn btn-primary" id="submit" type="submit" fdprocessedid="baingn" name="button">Login</button>
 
     </form>
+    <br>
     <p class="text-center">Don't have an account? <a href="register">Create an account</a>.</p>
 </div>
 {% endblock %}

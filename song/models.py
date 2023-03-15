@@ -81,11 +81,9 @@ class Podcast(Audio):
 
 
 
-class Playlist(models.Model):
-   name = models.CharField(max_length=255)
-   totalSongs = models.IntegerField(default=0)
-   songs = models.ManyToManyField(Song)
-
+# class Playlist(models.Model):
+#    name = models.CharField(max_length=255)
+#    songs = models.ManyToManyField(Song)
    
-   def __str__(self):
-      return self.name
+#    def __str__(self):
+#       return self.name
