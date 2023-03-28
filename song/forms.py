@@ -1,5 +1,5 @@
 from django import forms
-from .models import Song
+from .models import Song, Podcast
 
 class SongForm(forms.ModelForm):
     
@@ -7,3 +7,8 @@ class SongForm(forms.ModelForm):
         model=Song
         fields="__all__"
         
+class PodcastForm(forms.ModelForm):
+    
+    class Meta:
+        model=Podcast
+        fields="__all__"

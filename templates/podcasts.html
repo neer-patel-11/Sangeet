@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Sangeet</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* background: grey;   */
+            background: -webkit-linear-gradient(to right, #F27121, #E94057, #8A2387);
+            background: linear-gradient(to right, #F27121, #E94057, #8A2387);
+            width: 100%;
+            height: 100%;
+        }
+
+
+        :root {
+            --bgcolor: white;
+            --text-color: #000;
+            --secBgcolor: #dbdbdb;
+            --icon-hover: #000;
+
+        }
+
+        .dark {
+            --bgcolor: #26242e;
+            --text-color: #fff;
+            --shadow-color: #000;
+            --secBgcolor: #fff;
+            --icon-hover: #b7df69;
+        }
+
+        .givemespace {
+            margin-bottom: 30rem;
+        }
+
+        .cards {
+            margin-top: 10rem;
+            margin-right: 10rem;
+            display: flex;
+
+
+        }
+
+        .container {
+            position: relative;
+
+            margin-left: 2rem;
+            top: 50%;
+            left: 18%;
+            transform: translate(-50%, -50%);
+            width: 26%;
+            height: 450px;
+            border-radius: 5px;
+            background-color: var(--bgcolor);
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container::before,
+        .container::after {
+            content: "";
+            position: absolute;
+            top: -40px;
+            left: -40px;
+            border-radius: 50%;
+            background-color: #bfbfbf;
+            z-index: -1;
+        }
+
+        .container::before {
+            /* background: -webkit-linear-gradient(to right, #F27121, #E94057, #8A2387);  */
+            background-color: #bfbfbf;
+
+            background: linear-gradient(to right, #F27121, #E94057, #8A2387);
+
+            width: 160px;
+            height: 160px;
+            opacity: .5;
+
+        }
+
+        .container::after {
+            /* background: -webkit-linear-gradient(to right, #8A2387, #F27121, #E94057);  */
+            background: linear-gradient(to right, #8A2387, #F27121, #E94057);
+
+            width: 100px;
+            height: 100px;
+            opacity: .8;
+        }
+
+        input {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            cursor: pointer;
+            -webkit-appearance: none;
+            width: 38px;
+            height: 18px;
+            background-color: var(--secBgcolor);
+            border-radius: 10px;
+            outline: none;
+        }
+
+        input::before {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--bgcolor);
+            transition: .5s ease;
+        }
+
+        input:checked::before {
+            transform: translate(20px);
+        }
+
+        .img {
+            width: 250px;
+            height: 220px;
+            /* background:url('https://cdn.pixabay.com/photo/2021/07/21/12/50/wifi-6482990__480.png') top/cover; */
+            object-fit: cover;
+            border-radius: 93% 58% 41% 87%/ 90% 90% 51% 53%;
+            margin: 20px 0 0 0;
+        }
+
+        .name {
+            margin-top: 5px;
+            padding: 5px;
+            color: var(--text-color);
+            font-size: 2rem;
+            font-family: Copperplate, Papyrus, fantasy;  
+            font-weight: bold;
+
+        }
+
+        .text {
+            text-align: center;
+            padding: 5px;
+            color: var(--text-color);
+            font-size: 1.3rem;
+            font-family: Copperplate, Papyrus, fantasy;  
+
+        }
+
+        .link {
+            margin-top: 30px;
+
+        }
+
+        .link a {
+            text-decoration: none;
+            padding: 5px;
+            font-size: 1.3rem;
+            color: var(--text-color);
+            transition: 2.s ease;
+        }
+
+        a:hover {
+            color: var(--icon-hover);
+        }
+
+        .credit a {
+            text-decoration: none;
+            color: #ddd;
+            font-weight: 800;
+        }
+
+        .credit {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin: 10px;
+            color: #ddd;
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Sangeet</a>
+            </div>
+            <ul class="nav navbar-nav">
+                {% if request.session.username != None %}
+                <li><a href="#">Welcome, {{request.session.username}}</a></li>
+                <li><a href="./">Songs</a></li>
+                <li class="active"><a href="#">Podcasts</a></li>
+                <li><a href="/song/addPodcast">Upload Podcast</a></li>
+                <li><a href="/login/logout">Logout</a></li>
+                {% else %}
+                <li><a href="/login/logintemplate">Login</a></li>
+                {% endif %}
+
+            </ul>
+            <input type="checkbox" id="checkbox" onchange="toggle()">
+        </div>
+    </nav>
+
+    <div class="givemespace"> </div>
+    {% for threepodcasts in podcasts %}
+    <div class="cards">
+        {% for one in threepodcasts %}
+        <a class="container" href="podcasts/{{one.id}}">
+
+            <div class="img">
+                <img src="{{one.thumbnail.url}}" class="card-img-top" alt="..." height="250">
+            </div>
+            <br>
+            <br>
+
+            <p class="name">{{one.name}}</p>
+            <p class="text">{{one.artist}}</p>
+            {% if request.session.username != None %}
+            <audio controls="" name="media">
+                <source src="{{one.audioFile.url}}" type="audio/mpeg">
+            </audio>
+            {% else %}
+            <p class="text" style="color:red;">*Login Required</p>
+            <audio controls name="media">
+                <source src="" type="audio/mpeg">
+            </audio>
+            <form action="" method="POST">
+
+                <button type="submit">Like</button>
+            </form>
+            {% endif %}
+        </a>
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+    <script>
+
+        let checkBox = document.getElementById("checkbox");
+        function toggle() {
+            if (checkBox) {
+                document.body.classList.add('dark');
+                checkBox = false;
+            }
+            else {
+                document.body.classList.remove('dark');
+                checkBox = true;
+            }
+        }
+
+
+    </script>
+
+</body>
+
+</html>

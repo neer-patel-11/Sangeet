@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <title>song</title>
+
+    <style>
+
+    body{
+        background: -webkit-linear-gradient(to right, #F27121, #E94057, #8A2387); 
+background: linear-gradient(to right, #F27121, #E94057, #8A2387); 
+        width:100%;
+        height:100%;
+    }
+    .about-me {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+
+.about-me img {
+    margin-left: 27rem;
+    width: auto;
+    height: 350px;
+    border-radius: 10px;
+    margin-top: 10rem;
+} 
+
+.about-me-text p,h1 {
+  font-size: 30px;
+  color: black;
+  font-family: Copperplate, Papyrus, fantasy;  
+  margin: 0;
+}
+
+.about-me-text p {
+
+  font-size: 1.9rem;
+  color: #52053A;
+  {% comment %} margin: 10px 0;  {% endcomment %}
+}
+.about-me-text p span {
+    color: #52053D;
+    font-weight: bold;
+}
+
+
+
+.container {
+    background: linear-gradient(to right, #F27121, #E94057, #8A2387);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 5rem;
+    margin-right: 30rem;
+    margin-left: 20rem;
+    margin-top: 10rem;
+    {% comment %} height: 30rem; {% endcomment %}
+}
+
+#submit {
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    font-family: Copperplate, Papyrus, fantasy;
+    {% comment %} background: #242424; {% endcomment %}
+    background: #52053D;
+    border: hotpink;
+    border-radius: 5px;
+    box-shadow: 0 0 0px #fff,
+        0 0 5px #d0e5a4,
+        0 0 5px #d0e5a4,
+        0 0 5px #d0e5a4;
+
+}
+#submit a{
+   color: white;
+    font-weight: bold;
+}
+
+#submit:hover {
+    background: red;
+    color: #fff;
+    transform: scale(1.1);
+    {% comment %} border: none; {% endcomment %}
+    border-radius: 5px;
+    box-shadow: 0 0 0px #d0e5a4,
+        0 0 10px #d0e5a4,
+        0 0 10px #d0e5a4,
+        0 0 10px #d0e5a4;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Sangeet</a>
+            </div>
+            <ul class="nav navbar-nav">
+                {% if request.session.username != None %}
+                <li><a href="#">Welcome, {{request.session.username}}</a></li>
+                <li><a href="../">Songs</a></li>
+                <li><a href="/song/podcasts">Podcasts</a></li>
+                <li><a href="/song/addSong">Upload Song</a></li>
+                <li><a href="/login/logout">Logout</a></li>
+                {% else %}
+                <li><a href="/login/logintemplate">Login</a></li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </nav>
+
+    <div class="about-me">
+        <img src="{{song.thumbnail.url}}" alt="me">
+        <div class="about-me-text container">
+            <p><span>Song Name:</span> {{song.name}}</p>
+            <br>
+            <p><span>Artist:</span> {{song.artist}}</p>
+            <br>
+            <p><span>Type:</span> {{song.type}}</p>
+            <br>
+            <p><span>Language:</span> {{song.languages}}</p>
+            <br>
+            <p><span>Likes:</span> {{song.likeCount}}</p>
+            <br>
+            <audio controls=""  name="media"><source src="{{song.audioFile.url}}"type="audio/mpeg"></audio> 
+            <form method="POST">
+                <a> 
+                    <button id="submit" type="submit" name="button" fdprocessedid="ogiel4"><a href="../songPage/{{song.id}}">Like Song</a></button>
+                {% comment %} <button id="submit" type="submit" name="button">LOGIN</button> {% endcomment %}
+                </a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

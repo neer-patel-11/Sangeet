@@ -16,16 +16,15 @@ class Comment(models.Model):
 
 
 class Audio(models.Model):
-   name = models.CharField(max_length=255)
+   name = models.CharField(max_length=255, blank=True)
    audioFile = models.FileField(blank=False)
-   artist = models.CharField(max_length=255)
-   duration = models.TimeField(auto_now_add=False, blank=False)
-   thumbnail = models.FileField(upload_to='images', default=None)
-   languages = models.CharField(max_length=max(len(v[0]) for v in LANGUAGE_CHOICES),choices=LANGUAGE_CHOICES, default='hindi')
-   uploadDate = models.DateTimeField(auto_now_add=True)
-   likeCount = models.IntegerField(default=0)
+   artist = models.CharField(max_length=255, blank=True)
+   thumbnail = models.FileField(upload_to='images', blank=False)
+   languages = models.CharField(max_length=max(len(v[0]) for v in LANGUAGE_CHOICES),choices=LANGUAGE_CHOICES, default='hindi', blank=True)
+   uploadDate = models.DateTimeField(auto_now_add=True, blank=True)
+   likeCount = models.IntegerField(default=0, blank=True)
    # comment = ManyToManyField(models.CharField(max_length=500))
-   size =models.FloatField()#MB
+   # size =models.FloatField(blank=True)#MB
 
 
    class Meta:
@@ -71,7 +70,6 @@ TYPE_OF_PODCAST = (
 
 
 class Podcast(Audio):
-   comments = models.ManyToManyField(Comment, blank=True)
    type=models.CharField(max_length=max(len(v[0]) for v in TYPE_OF_PODCAST),choices=TYPE_OF_PODCAST)
 
    
